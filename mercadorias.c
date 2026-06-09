@@ -21,6 +21,10 @@ void cadastrar_produto(void)
     fgets(p.nome, 30, stdin);
     p.nome[strcspn(p.nome, "\n")] = 0;
 
+	printf("Categoria: ");
+    fgets(p.categoria, 20, stdin);
+    p.categoria[strcspn(p.categoria, "\n")] = 0;
+
     printf("Preco: R$ ");
     scanf("%f", &p.preco);
 
@@ -28,6 +32,7 @@ void cadastrar_produto(void)
     scanf("%d", &p.quantidade);
 
     fprintf(arquivo, "%s:\n", p.nome);
+	fprintf(arquivo, "Categoria: %s\n", p.categoria);
     fprintf(arquivo, "Preço: R$ %.2f\n", p.preco);
     fprintf(arquivo, "Quantidade: %d\n", p.quantidade);
     fprintf(arquivo, "------------------------\n");
