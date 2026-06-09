@@ -16,12 +16,12 @@ void cadastrar_produto(void)
     int c;
     while ((c = getchar()) != '\n' && c != EOF); 
 
-	//cadastro do produto - Pedro Wilson
+    //Cadastro do produto - Pedro Wilson
     printf("Nome do Produto: ");
     fgets(p.nome, 30, stdin);
     p.nome[strcspn(p.nome, "\n")] = 0;
-
-	printf("Categoria: ");
+    
+    printf("Categoria: ");
     fgets(p.categoria, 20, stdin);
     p.categoria[strcspn(p.categoria, "\n")] = 0;
 
@@ -32,7 +32,7 @@ void cadastrar_produto(void)
     scanf("%d", &p.quantidade);
 
     fprintf(arquivo, "%s:\n", p.nome);
-	fprintf(arquivo, "Categoria: %s\n", p.categoria);
+    fprintf(arquivo, "Categoria: %s\n", p.categoria); 
     fprintf(arquivo, "Preço: R$ %.2f\n", p.preco);
     fprintf(arquivo, "Quantidade: %d\n", p.quantidade);
     fprintf(arquivo, "------------------------\n");
@@ -43,7 +43,7 @@ void cadastrar_produto(void)
 
 void listar_produtos(void)
 {
-	FILE *arquivo = fopen("produtos.txt", "r");
+    FILE *arquivo = fopen("produtos.txt", "r");
     if (arquivo == NULL) {
         printf("\nNenhum produto cadastrado ainda ou arquivo nao encontrado.\n");
         return;
