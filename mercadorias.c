@@ -43,6 +43,27 @@ void cadastrar_produto(void)
 
 void listar_produtos(void)
 {
+	FILE *arquivo = fopen("produtos.txt", "r");
+    if (arquivo == NULL) {
+        printf("\nNenhum produto cadastrado ainda ou arquivo nao encontrado.\n");
+        return;
+    }
+
+    Produto p;
+    printf("\n==================== PRODUTOS EM ESTOQUE ====================\n");
+    while (fscanf(arquivo, " %[^:]:\nCategoria: %[^\n]\nPreço: R$ %f\nQuantidade: %d\n------------------------\n", 
+                  p.nome, p.categoria, &p.preco, &p.quantidade) == 4) {
+        
+        // Exibe no terminal - Pedro Wilson
+        printf("%s:\n", p.nome);
+        printf("Categoria: %s\n", p.categoria);
+        printf("Preço: R$ %.2f\n", p.preco);
+        printf("Quantidade: %d\n", p.quantidade);
+        printf("------------------------\n");
+    }
+
+    printf("=============================================================\n");
+    fclose(arquivo);
 }
 
 void modificar_produto(void)
