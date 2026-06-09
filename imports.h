@@ -9,7 +9,7 @@ struct mercadoria
     char nome[20];
     float preco;
     char categoria[20];
-    int quantidade_disponivel;
+    int quantidade;
 };
 
 void cadastrar_produto(void);
