@@ -1,5 +1,7 @@
 #include "imports.h"
 
+Produto p;
+
 void cadastrar_produto(void)
 {
   //cria o arquivo txt do cadastro de produtos - Pedro Wilson

@@ -4,13 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct mercadoria
+struct Produto
 {
     char nome[20];
     float preco;
     char categoria[20];
     int quantidade;
-};
+} Produto;
 
 void cadastrar_produto(void);
 void listar_produtos(void);
