@@ -23,12 +23,13 @@ typedef struct {
 // PROTÓTIPOS DAS FUNÇÕES (CONTRATOS)
 // ==========================================
 
-// Funções de Regra e Arquivo (src/banco_arquivos.c)
-int validar_produto(Produto p);
+// Funções de Regra e Arquivo (src/functions/*.c)
 int salvar_produto(Produto p);
 void listar_produtos(void);
 int modificar_produto_no_arquivo(char *nome_busca, Produto novos_dados);
 int deletar_produto_no_arquivo(char *nome_busca);
+
+// Funções de Interface/Menu (src/menu.c e src/menus/*.c)
 
 // Funções de Interface/Menu (src/menu.c e src/interface_menu.c)
 void tela_cadastro(void);

@@ -1,9 +1,9 @@
 
 ## Como compilar e executar
 
-Para compilar (Linux / macOS):
+Para compilar com `gcc`:
 
-	gcc Main.c src/banco_arquivos.c src/interface_menu.c src/utilitarios.c -Iinclude -o sistema.exe
+	gcc Main.c src/menu.c src/core/utilitarios.c src/functions/cadastrar.c src/functions/listar.c src/functions/modificar.c src/functions/deletar.c src/menus/tela_cadastro.c src/menus/tela_modificar.c src/menus/tela_deletar.c -Iinclude -o sistema.exe
 
 Ou use o `Makefile`:
 
@@ -58,25 +58,38 @@ Fluxo básico:
 ## Estrutura de pastas (resumo)
 
 - `Main.c` — ponto de entrada do programa.
-- `src/` — código-fonte principal (`banco_arquivos.c`, `menu.c`,`interface_menu.c`, `utilitarios.c`, `mercadorias.c`).
+- `src/` — código-fonte organizado em módulos:
+  - `src/core/` — implementação de leitura/escrita de arquivo e utilitários.
+  - `src/functions/` — operações de CRUD (cadastrar, listar, modificar, deletar).
+  - `src/menus/` — telas de menu para cada ação.
+  - `src/menu.c` — fluxo do menu principal.
 - `include/` — arquivos de cabeçalho (`.h`).
-- `data/` — local dos arquivos `produtos.txt` e `temp.txt`.
+- `data/` — persistência de dados (`produtos.txt`, `temp.txt`).
 - `Makefile` — build rápido com `make`.
-
 
 
 ## Estrutura de pastas (detalhado)
 
  - `Main.c` — contém a função `main()` que chama o menu principal do sistema.
- - `include/` — cabeçalhos do projeto:
-	 - `imports.h` — inclui bibliotecas padrão, define a struct `Produto` e declara protótipos gerais.
-	 - `banco_arquivos.h`, `menu.c`,`interface_menu.h`, `utilitarios.h` — contratos específicos para cada módulo.
- - `src/` — implementação das funcionalidades:
-	 - `banco_arquivos.c` — funções que gravam, leem, modificam e deletam registros no arquivo de dados (`data/produtos.txt`).
-	 - `interface_menu.c` — implementa as telas/fluxo do menu e chama funções de `src/` para executar ações.
-	 - `utilitarios.c` — pequenas rotinas utilitárias (por exemplo, limpar buffer de entrada).
-	 - `mercadorias.c` — validações e regras de negócio (validação de produto, helpers de leitura/gravação).
- - `data/` — diretório para persistência (arquivos gerados em tempo de execução):
+ - `imports.h` — cabeçalho global com includes padrão, struct `Produto` e protótipos gerais.
+ - `include/` — cabeçalhos específicos do projeto:
+	 - `banco_arquivos.h` — protótipos de operações em arquivo e regras de negócio.
+	 - `interface_menu.h` — protótipos das telas e do menu principal.
+	 - `utilitarios.h` — protótipo de `limpar_buffer()`.
+ - `src/` — implementação principal dividida em módulos:
+	 - `src/menu.c` — orquestra o menu principal e a navegação de opções.
+	 - `src/core/` — funções de baixo nível e utilitários:
+		 - `src/core/utilitarios.c` — rotinas auxiliares como `limpar_buffer()`.
+	 - `src/functions/` — implementações de CRUD:
+		 - `src/functions/cadastrar.c` — salva produto.
+		 - `src/functions/listar.c` — lista produtos.
+		 - `src/functions/modificar.c` — altera produto existente.
+		 - `src/functions/deletar.c` — remove produto.
+	 - `src/menus/` — telas de interface:
+		 - `src/menus/tela_cadastro.c`
+		 - `src/menus/tela_modificar.c`
+		 - `src/menus/tela_deletar.c`
+ - `data/` — diretório de persistência:
 	 - `produtos.txt` — arquivo principal com os produtos cadastrados.
 	 - `temp.txt` — arquivo temporário usado para modificar/excluir antes de substituir o principal.
  - `Makefile` — regras para compilar (`make`) e limpar (`make clean`).
