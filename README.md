@@ -3,7 +3,7 @@
 
 Para compilar com `gcc`:
 
-	gcc Main.c src/menu.c src/core/utilitarios.c src/functions/cadastrar.c src/functions/listar.c src/functions/modificar.c src/functions/deletar.c src/menus/tela_cadastro.c src/menus/tela_modificar.c src/menus/tela_deletar.c -Iinclude -o sistema.exe
+	gcc Main.c src/menu.c src/utilitarios.c src/functions/cadastrar.c src/functions/listar.c src/functions/modificar.c src/functions/deletar.c -Iinclude -o sistema.exe
 
 Ou use o `Makefile`:
 
@@ -59,10 +59,9 @@ Fluxo básico:
 
 - `Main.c` — ponto de entrada do programa.
 - `src/` — código-fonte organizado em módulos:
-  - `src/core/` — implementação de leitura/escrita de arquivo e utilitários.
-  - `src/functions/` — operações de CRUD (cadastrar, listar, modificar, deletar).
-  - `src/menus/` — telas de menu para cada ação.
   - `src/menu.c` — fluxo do menu principal.
+  - `src/utilitarios.c` — funções auxiliares como `limpar_buffer()`.
+  - `src/functions/` — operações de CRUD com interfaces integradas (cadastrar, listar, modificar, deletar).
 - `include/` — arquivos de cabeçalho (`.h`).
 - `data/` — persistência de dados (`produtos.txt`, `temp.txt`).
 - `Makefile` — build rápido com `make`.
@@ -78,20 +77,15 @@ Fluxo básico:
 	 - `utilitarios.h` — protótipo de `limpar_buffer()`.
  - `src/` — implementação principal dividida em módulos:
 	 - `src/menu.c` — orquestra o menu principal e a navegação de opções.
-	 - `src/core/` — funções de baixo nível e utilitários:
-		 - `src/core/utilitarios.c` — rotinas auxiliares como `limpar_buffer()`.
-	 - `src/functions/` — implementações de CRUD:
-		 - `src/functions/cadastrar.c` — salva produto.
-		 - `src/functions/listar.c` — lista produtos.
-		 - `src/functions/modificar.c` — altera produto existente.
-		 - `src/functions/deletar.c` — remove produto.
-	 - `src/menus/` — telas de interface:
-		 - `src/menus/tela_cadastro.c`
-		 - `src/menus/tela_modificar.c`
-		 - `src/menus/tela_deletar.c`
+	 - `src/utilitarios.c` — rotinas auxiliares como `limpar_buffer()`.
+	 - `src/functions/` — implementações de CRUD com interfaces integradas:
+		 - `src/functions/cadastrar.c` — lógica de validação + interface (`tela_cadastro()`).
+		 - `src/functions/listar.c` — exibe produtos cadastrados.
+		 - `src/functions/modificar.c` — lógica de modificação + interface (`tela_modificar()`).
+		 - `src/functions/deletar.c` — lógica de exclusão + interface (`tela_deletar()`).
  - `data/` — diretório de persistência:
 	 - `produtos.txt` — arquivo principal com os produtos cadastrados.
 	 - `temp.txt` — arquivo temporário usado para modificar/excluir antes de substituir o principal.
  - `Makefile` — regras para compilar (`make`) e limpar (`make clean`).
 
-Dica: mantenha o diretório `data/` versionado apenas com arquivos de exemplo; arquivos reais de execução normalmente não são comitados.
+**Nota sobre reorganização:** As telas de menu foram consolidadas com suas respectivas funções de negócio no mesmo arquivo (ex: `tela_cadastro()` agora está em `cadastrar.c`), eliminando a separação desnecessária entre lógica e interface. Isso melhora a coesão e facilita a manutenção.

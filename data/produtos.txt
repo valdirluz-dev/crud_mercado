@@ -1,5 +1,0 @@
-Feijão:
-Categoria: Grão
-Preço: R$ 10.00
-Quantidade: -10
-------------------------
