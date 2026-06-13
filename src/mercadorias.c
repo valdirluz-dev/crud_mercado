@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../imports.h"
 
 // Definição da struct para garantir o funcionamento do código isolado
 typedef struct {
@@ -12,7 +10,7 @@ typedef struct {
 
 void cadastrar_produto(void)
 {
-    FILE *arquivo = fopen("produtos.txt", "a");
+    FILE *arquivo = fopen(PRODUTOS_PATH, "a");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -51,7 +49,7 @@ void cadastrar_produto(void)
 
 void listar_produtos(void)
 {
-    FILE *arquivo = fopen("produtos.txt", "r");
+    FILE *arquivo = fopen(PRODUTOS_PATH, "r");
     if (arquivo == NULL) {
         printf("\nNenhum produto cadastrado ainda ou arquivo nao encontrado.\n");
         return;
@@ -77,8 +75,8 @@ void listar_produtos(void)
 
 void modificar_produto(void)
 {
-    FILE *arquivo = fopen("produtos.txt", "r");
-    FILE *temp = fopen("temp.txt", "w");
+    FILE *arquivo = fopen(PRODUTOS_PATH, "r");
+    FILE *temp = fopen(TEMP_PATH, "w");
     
     if (arquivo == NULL || temp == NULL) {
         printf("Erro ao Abrir o Arquivo\n");
@@ -136,19 +134,19 @@ void modificar_produto(void)
     
     // Aplicado a substituição do arquivo que faltava
     if (achou) {
-        remove("produtos.txt");
-        rename("temp.txt", "produtos.txt");
+        remove(PRODUTOS_PATH);
+        rename(TEMP_PATH, PRODUTOS_PATH);
         printf("\nProduto modificado com sucesso!\n");
     } else {
-        remove("temp.txt"); // Descarta o temporário se não alterou nada
+        remove(TEMP_PATH); // Descarta o temporário se não alterou nada
         printf("\nProduto '%s' não encontrado.\n", nome_busca);
     }
 }
 
 void deletar_produto(void)
 {
-    FILE *arquivo = fopen("produtos.txt", "r");
-    FILE *temp = fopen("temp.txt", "w");
+    FILE *arquivo = fopen(PRODUTOS_PATH, "r");
+    FILE *temp = fopen(TEMP_PATH, "w");
     
     if (arquivo == NULL || temp == NULL) {
         printf("O Arquivo Não pode ser encontrado ou não existe.\n");
@@ -188,11 +186,11 @@ void deletar_produto(void)
     fclose(temp);
     
     if (achou) {
-        remove("produtos.txt");
-        rename("temp.txt", "produtos.txt");
+        remove(PRODUTOS_PATH);
+        rename(TEMP_PATH, PRODUTOS_PATH);
         printf("\nProduto deletado com sucesso.\n");
     } else {
-        remove("temp.txt"); // Limpa o temporário inútil
+        remove(TEMP_PATH); // Limpa o temporário inútil
         printf("\nProduto '%s' não pôde ser encontrado.\n", nome_busca);
     }
 }

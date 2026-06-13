@@ -1,16 +1,12 @@
 #ifndef BANCO_ARQUIVOS_H
 #define BANCO_ARQUIVOS_H
 
-typedef struct {
-    char nome[30];
-    char categoria[20];
-    float preco;
-    int quantidade;
-} Produto;
+#include "../imports.h"
 
-void cadastrar_produto(void);
+int validar_produto(Produto p);
+int salvar_produto(Produto p);
 void listar_produtos(void);
-void modificar_produto(void);
-void deletar_produto(void);
+int modificar_produto_no_arquivo(char *nome_busca, Produto novos_dados);
+int deletar_produto_no_arquivo(char *nome_busca);
 
 #endif

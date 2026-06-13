@@ -11,7 +11,7 @@ int validar_produto(Produto p) {
 int salvar_produto(Produto p) {
     if (!validar_produto(p)) return 0; // Barreira de segurança
 
-    FILE *arquivo = fopen("produtos.txt", "a");
+    FILE *arquivo = fopen(PRODUTOS_PATH, "a");
     if (arquivo == NULL) return -1;
 
     fprintf(arquivo, "%s:\n", p.nome);
@@ -26,7 +26,7 @@ int salvar_produto(Produto p) {
 
 // REAPROVEITADO do Pedro: Exibe os dados do arquivo
 void listar_produtos(void) {
-    FILE *arquivo = fopen("produtos.txt", "r");
+    FILE *arquivo = fopen(PRODUTOS_PATH, "r");
     if (arquivo == NULL) {
         printf("\nNenhum produto cadastrado ou arquivo nao encontrado.\n");
         return;
@@ -51,8 +51,8 @@ void listar_produtos(void) {
 int modificar_produto_no_arquivo(char *nome_busca, Produto novos_dados) {
     if (!validar_produto(novos_dados)) return 0;
 
-    FILE *arquivo = fopen("produtos.txt", "r");
-    FILE *temp = fopen("temp.txt", "w");
+    FILE *arquivo = fopen(PRODUTOS_PATH, "r");
+    FILE *temp = fopen(TEMP_PATH, "w");
     if (arquivo == NULL || temp == NULL) {
         if (arquivo) fclose(arquivo);
         return -1;
@@ -80,18 +80,18 @@ int modificar_produto_no_arquivo(char *nome_busca, Produto novos_dados) {
     fclose(temp);
     
     if (achou) {
-        remove("produtos.txt");
-        rename("temp.txt", "produtos.txt");
+        remove(PRODUTOS_PATH);
+        rename(TEMP_PATH, PRODUTOS_PATH);
         return 1;
     }
-    remove("temp.txt");
+    remove(TEMP_PATH);
     return 0;
 }
 
 // REAPROVEITADO do Gabriel: Deletar pulando a escrita no temp
 int deletar_produto_no_arquivo(char *nome_busca) {
-    FILE *arquivo = fopen("produtos.txt", "r");
-    FILE *temp = fopen("temp.txt", "w");
+    FILE *arquivo = fopen(PRODUTOS_PATH, "r");
+    FILE *temp = fopen(TEMP_PATH, "w");
     if (arquivo == NULL || temp == NULL) {
         if (arquivo) fclose(arquivo);
         return -1;
@@ -119,10 +119,10 @@ int deletar_produto_no_arquivo(char *nome_busca) {
     fclose(temp);
     
     if (achou) {
-        remove("produtos.txt");
-        rename("temp.txt", "produtos.txt");
+        remove(PRODUTOS_PATH);
+        rename(TEMP_PATH, PRODUTOS_PATH);
         return 1;
     }
-    remove("temp.txt");
+    remove(TEMP_PATH);
     return 0;
 }
