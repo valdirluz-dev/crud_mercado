@@ -30,7 +30,7 @@ void listar_produtos(void);
 int modificar_produto_no_arquivo(char *nome_busca, Produto novos_dados);
 int deletar_produto_no_arquivo(char *nome_busca);
 
-// Funções de Interface/Menu (src/interface_menu.c)
+// Funções de Interface/Menu (src/menu.c e src/interface_menu.c)
 void tela_cadastro(void);
 void tela_modificar(void);
 void tela_deletar(void);

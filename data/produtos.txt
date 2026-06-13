@@ -1,10 +1,5 @@
-ProdutoTeste:
-Categoria: CategoriaTeste
-Preço: R$ 12.34
-Quantidade: 2
-------------------------
-Feijão:
-Categoria: Graos
-Preço: R$ 100.00
-Quantidade: 10
+Arroz:
+Categoria: Grãos
+Preço: R$ 10.00
+Quantidade: -10
 ------------------------

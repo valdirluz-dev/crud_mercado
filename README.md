@@ -58,7 +58,7 @@ Fluxo básico:
 ## Estrutura de pastas (resumo)
 
 - `Main.c` — ponto de entrada do programa.
-- `src/` — código-fonte principal (`banco_arquivos.c`, `interface_menu.c`, `utilitarios.c`, `mercadorias.c`).
+- `src/` — código-fonte principal (`banco_arquivos.c`, `menu.c`,`interface_menu.c`, `utilitarios.c`, `mercadorias.c`).
 - `include/` — arquivos de cabeçalho (`.h`).
 - `data/` — local dos arquivos `produtos.txt` e `temp.txt`.
 - `Makefile` — build rápido com `make`.
@@ -70,7 +70,7 @@ Fluxo básico:
  - `Main.c` — contém a função `main()` que chama o menu principal do sistema.
  - `include/` — cabeçalhos do projeto:
 	 - `imports.h` — inclui bibliotecas padrão, define a struct `Produto` e declara protótipos gerais.
-	 - `banco_arquivos.h`, `interface_menu.h`, `utilitarios.h` — contratos específicos para cada módulo.
+	 - `banco_arquivos.h`, `menu.c`,`interface_menu.h`, `utilitarios.h` — contratos específicos para cada módulo.
  - `src/` — implementação das funcionalidades:
 	 - `banco_arquivos.c` — funções que gravam, leem, modificam e deletam registros no arquivo de dados (`data/produtos.txt`).
 	 - `interface_menu.c` — implementa as telas/fluxo do menu e chama funções de `src/` para executar ações.
