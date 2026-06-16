@@ -1,0 +1,15 @@
+tomate:
+Categoria: fruta
+Preço: R$ 10.00
+Quantidade: 200
+------------------------
+queijo:
+Categoria: laticinios
+Preço: R$ 40.00
+Quantidade: 300
+------------------------
+presunto:
+Categoria: congelados
+Preço: R$ 15.00
+Quantidade: 20
+------------------------

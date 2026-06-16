@@ -8,14 +8,70 @@ static int validar_produto(Produto p) {
     if (strlen(p.nome) < 3 || strlen(p.nome) > 30) return 0;
     return 1;
 }
-    int categoria_valida(char categoria[]) {
-    char categorias[][20] = {
-    "graos","carnes","frios","hortifruti","temperos","bebidas","limpeza","higiene"};
-    int total = sizeof(categorias) / sizeof(categorias[0]);
+int categoria_valida(char categoria[]) {
+    if (strlen(categoria) < 3) {
+        return 0;
+    }
+
+    int so_numero = 1;
+    for (int i = 0; categoria[i] != '\0'; i++) {
+        if (categoria[i] < '0' || categoria[i] > '9') {
+            so_numero = 0;
+            break;
+        }
+    }
+
+    if (so_numero) {
+        return 0;
+    }
+
+    return 1;
+}
+
+void mostrar_categorias_existentes(void) {
+    FILE *arquivo = fopen(PRODUTOS_PATH, "r");
+    if (arquivo == NULL) {
+        printf("\nNenhuma categoria cadastrada ainda.\n");
+        return;
+    }
+
+    char linha[128];
+    char categorias[100][20];
+    int total = 0;
+
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        if (strncmp(linha, "Categoria: ", 11) == 0) {
+            char categoria[20];
+            sscanf(linha + 11, "%19[^\n]", categoria);
+
+            int ja_existe = 0;
+            for (int i = 0; i < total; i++) {
+                if (strcmp(categorias[i], categoria) == 0) {
+                    ja_existe = 1;
+                    break;
+                }
+            }
+
+            if (!ja_existe) {
+                strcpy(categorias[total], categoria);
+                total++;
+            }
+        }
+    }
+
+    fclose(arquivo);
+
+    if (total == 0) {
+        printf("\nNenhuma categoria cadastrada ainda.\n");
+        return;
+    }
+
+    printf("\nCategorias cadastradas: ");
     for (int i = 0; i < total; i++) {
-    if (strcmp(categoria, categorias[i]) == 0) {
-    return 1;}}
-    return 0;}
+        printf("%s%s", (i > 0) ? ", " : "", categorias[i]);
+    }
+    printf("\n");
+}
 
 int nome_existe(char nome[]) {
     FILE *arquivo = fopen("produtos.txt", "r");
@@ -71,15 +127,16 @@ void tela_cadastro(void) {
     printf("Ja existe um produto com esse nome!\n"); }} 
      while (strlen(p.nome) <= 2 || existe);
     
-     do { printf("Categoria: ");
-    printf("|graos |carnes |frios |hortifruti |temperos |bebidas |limpeza |higiene");
+     do { 
+    mostrar_categorias_existentes();
+    printf("Categoria: ");
     fgets(p.categoria, 20, stdin);
     p.categoria[strcspn(p.categoria, "\n")] = 0;
      for (int i = 0; p.categoria[i] != '\0'; i++) {
     p.categoria[i] = tolower(p.categoria[i]);}
     valida = categoria_valida(p.categoria);
      if (!valida) {
-    printf("Categoria invalida! Tente novamente.\n");}}
+    printf("Categoria invalida! Digite uma categoria com pelo menos 3 letras e que nao seja somente numeros.\n");}}
      while (!valida);
     
      do { printf("Preco: R$ ");
