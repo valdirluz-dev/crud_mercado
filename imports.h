@@ -41,5 +41,6 @@ void executar_menu_principal(void);
 
 // Funções Utilitárias (src/utilitarios.c)
 void limpar_buffer(void);
+int validar_produto(Produto p);
 
 #endif
