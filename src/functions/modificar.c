@@ -3,12 +3,6 @@
 // ====================================================================
 // LÓGICA DE NEGÓCIO - Modificar Produto
 // ====================================================================
-static int validar_produto(Produto p) {
-    if (p.preco <= 0) return 0;
-    if (strlen(p.nome) < 3 || strlen(p.nome) > 30) return 0;
-    return 1;
-}
-
 int modificar_produto_no_arquivo(char *nome_busca, Produto novos_dados) {
     if (!validar_produto(novos_dados)) return 0;
 
