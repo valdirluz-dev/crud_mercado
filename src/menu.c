@@ -14,7 +14,8 @@ void executar_menu_principal(void) {
         printf(" [2] Listar Todos os Produtos\n");
         printf(" [3] Modificar Produto\n");
         printf(" [4] Deletar Produto\n");
-        printf(" [5] Sair do Sistema\n");
+        printf(" [5] Adicionar Estoque\n");
+        printf(" [6] Sair do Sistema\n");
         printf("--------------------------------------------------\n");
         printf("Digite sua opção: ");
         
@@ -38,11 +39,16 @@ void executar_menu_principal(void) {
                 tela_deletar();
                 break;
             case 5:
-                printf("\nEncerrando o sistema. Até logo!\n");
+                tela_adicionar_estoque();
+                break;
+            case 6:
+                printf("\nEncerrando o sistema. Ate logo!\n");
                 break;
             default:
-                printf("\n[OPÇÃO INVÁLIDA] Escolha um número de 1 a 5.\n");
+                printf("\n[OPCAO INVALIDA] Escolha um numero de 1 a 6.\n");
                 break;
+              
+            
         }
     } while (opcao != 5);
 }
