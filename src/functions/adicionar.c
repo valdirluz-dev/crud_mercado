@@ -18,8 +18,11 @@ void tela_adicionar_estoque(void) {
             strcpy(produtos[total].nome, linha);
             fgets(linha, sizeof(linha), arquivo);
             sscanf(linha, "Categoria: %19[^\n]", produtos[total].categoria);
+            
             fgets(linha, sizeof(linha), arquivo);
-            sscanf(linha, "Preco: R$ %f", &produtos[total].preco);
+            // CORREÇÃO 1: Alterado de "Preco" para "Preço" para ler corretamente o arquivo padrão
+            sscanf(linha, "Preço: R$ %f", &produtos[total].preco); 
+            
             fgets(linha, sizeof(linha), arquivo);
             sscanf(linha, "Quantidade: %d", &produtos[total].quantidade);
             fgets(linha, sizeof(linha), arquivo);
@@ -76,7 +79,10 @@ void tela_adicionar_estoque(void) {
     for (int i = 0; i < total; i++) {
         fprintf(arquivo, "%s:\n", produtos[i].nome);
         fprintf(arquivo, "Categoria: %s\n", produtos[i].categoria);
-        fprintf(arquivo, "Preco: R$ %.2f\n", produtos[i].preco);
+        
+        // CORREÇÃO 2: Alterado de "Preco" para "Preço" para manter a integridade transacional (RNF13)
+        fprintf(arquivo, "Preço: R$ %.2f\n", produtos[i].preco); 
+        
         fprintf(arquivo, "Quantidade: %d\n", produtos[i].quantidade);
         fprintf(arquivo, "------------------------\n");
     }
