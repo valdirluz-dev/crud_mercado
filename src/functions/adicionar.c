@@ -1,7 +1,8 @@
 #include "../../imports.h"
 
 void tela_adicionar_estoque(void) {
-    Produto produtos[100];
+    Produto produtos[1000];
+    const int MAX_PRODUTOS = sizeof(produtos) / sizeof(produtos[0]);
     int total = 0;
 
     FILE *arquivo = fopen(PRODUTOS_PATH, "r");
@@ -14,6 +15,10 @@ void tela_adicionar_estoque(void) {
     while (fgets(linha, sizeof(linha), arquivo)) {
         linha[strcspn(linha, "\n")] = 0;
         if (strlen(linha) > 0 && linha[strlen(linha)-1] == ':') {
+            if (total >= MAX_PRODUTOS) {
+                printf("\n[ERRO] Capacidade maxima de %d produtos atingida. Nem todos os produtos foram carregados.\n", MAX_PRODUTOS);
+                break;
+            }
             linha[strlen(linha)-1] = 0;
             strcpy(produtos[total].nome, linha);
             fgets(linha, sizeof(linha), arquivo);
