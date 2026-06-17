@@ -50,5 +50,5 @@ void executar_menu_principal(void) {
               
             
         }
-    } while (opcao != 5);
+    } while (opcao != 6);
 }
