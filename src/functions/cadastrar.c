@@ -3,12 +3,6 @@
 // ====================================================================
 // LÓGICA DE NEGÓCIO - Salvar Produto
 // ====================================================================
-static int validar_produto(Produto p) {
-    if (p.preco <= 0) return 0;
-    if (strlen(p.nome) < 3 || strlen(p.nome) > 30) return 0;
-    return 1;
-}
-
 int categoria_valida(char categoria[]) {
     if (strlen(categoria) < 3) {
         return 0;
