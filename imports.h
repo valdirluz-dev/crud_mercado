@@ -36,6 +36,7 @@ int deletar_produto_no_arquivo(char *nome_busca);
 void tela_cadastro(void);
 void tela_modificar(void);
 void tela_deletar(void);
+void tela_adicionar_estoque(void);
 void executar_menu_principal(void);
 
 // Funções Utilitárias (src/utilitarios.c)

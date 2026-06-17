@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Iinclude
 SRC = Main.c src/menu.c src/utilitarios.c \
-	src/functions/cadastrar.c src/functions/listar.c src/functions/modificar.c src/functions/deletar.c
+	src/functions/cadastrar.c src/functions/listar.c src/functions/modificar.c src/functions/deletar.c src/functions/adicionar.c
 TARGET = sistema.exe
 
 all: $(TARGET)
