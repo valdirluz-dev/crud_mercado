@@ -25,22 +25,12 @@ typedef struct {
 // ==========================================
 
 // Funções de Regra e Arquivo (src/functions/*.c)
-int salvar_produto(Produto p);
-void listar_produtos(void);
-int modificar_produto_no_arquivo(char *nome_busca, Produto novos_dados);
-int deletar_produto_no_arquivo(char *nome_busca);
-
-// Funções de Interface/Menu (src/menu.c e src/menus/*.c)
+#include "include/banco_arquivos.h"
 
 // Funções de Interface/Menu (src/menu.c e src/interface_menu.c)
-void tela_cadastro(void);
-void tela_modificar(void);
-void tela_deletar(void);
-void tela_adicionar_estoque(void);
-void executar_menu_principal(void);
+#include "include/interface_menu.h"
 
 // Funções Utilitárias (src/utilitarios.c)
-void limpar_buffer(void);
-int validar_produto(Produto p);
+#include "include/utilitarios.h"
 
 #endif

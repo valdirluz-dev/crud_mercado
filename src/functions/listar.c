@@ -1,6 +1,7 @@
 #include "../imports.h"
 
 void listar_produtos(void) {
+    
     FILE *arquivo = fopen(PRODUTOS_PATH, "r");
     if (arquivo == NULL) {
         printf("\nNenhum produto cadastrado ou arquivo nao encontrado.\n");

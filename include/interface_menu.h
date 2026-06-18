@@ -6,6 +6,8 @@
 void tela_cadastro(void);
 void tela_modificar(void);
 void tela_deletar(void);
+void tela_adicionar_estoque(void);
+void tela_remover_estoque(void);
 void executar_menu_principal(void);
 
 #endif

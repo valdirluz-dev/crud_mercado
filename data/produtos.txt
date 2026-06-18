@@ -1,5 +1,5 @@
-feijão:
+Arroz:
 Categoria: grãos
 Preço: R$ 10.00
-Quantidade: 100
+Quantidade: 80
 ------------------------

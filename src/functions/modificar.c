@@ -55,6 +55,8 @@ void tela_modificar(void) {
     printf("\n==================================================\n");
     printf("             MODIFICAR PRODUTO EXISTENTE          \n");
     printf("==================================================\n");
+
+    listar_nomes_produtos();
     
     printf("Digite o nome exato do produto que deseja alterar: ");
     fgets(nome_busca, 30, stdin);
@@ -65,6 +67,7 @@ void tela_modificar(void) {
     fgets(novos_dados.nome, 30, stdin);
     novos_dados.nome[strcspn(novos_dados.nome, "\n")] = 0;
     
+    mostrar_categorias_existentes();
     printf("Nova Categoria: ");
     fgets(novos_dados.categoria, 20, stdin);
     novos_dados.categoria[strcspn(novos_dados.categoria, "\n")] = 0;
