@@ -59,6 +59,7 @@ Para fins de organização e manutenibilidade do código, o software adota uma a
 │       ├── modificar.c     # Mecanismo de atualização lógica de registros
 │       ├── deletar.c       # Processo de exclusão de dados
 │       └── adicionar.c     # Algoritmo de reabastecimento rápido de estoque
+│       └── remover.c       # Algoritmo de remoção rápida de estoque
 ├── data/                   # Diretório de persistência de dados
 │   ├── produtos.txt        # Banco de dados em texto simples (físico)
 │   └── temp.txt            # Arquivo temporário de suporte para escrita e deleção seletiva
@@ -90,7 +91,8 @@ O arquivo `src/menu.c` implementa a interface do usuário orientada a menu por c
 3. **Modificar Produto:** Edição de dados de um item existente.
 4. **Deletar Produto:** Remoção controlada de mercadorias.
 5. **Adicionar Estoque:** Incremento numérico direto na quantidade atual.
-6. **Sair do Sistema:** Encerramento seguro do loop.
+6. **Remover Estoque:** Decremento numérico direto na quantidade atual.
+7. **Sair do Sistema:** Encerramento seguro do loop.
 
 ### 3. Persistência de Dados e Gerenciamento de Arquivos (`stdio.h`)
 
@@ -112,7 +114,7 @@ Para auxiliar no desenvolvimento colaborativo:
 
 * **Clonar o projeto localmente:**
 ```bash
-git clone [https://github.com/valdirluz-dev/crud_mercado.git](https://github.com/valdirluz-dev/crud_mercado.git)
+git clone https://github.com/valdirluz-dev/crud_mercado.git
 cd crud_mercado
 
 ```
