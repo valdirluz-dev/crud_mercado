@@ -1,4 +1,4 @@
-Feijão:
+Arroz:
 Categoria: Grãos
 Preço: R$ 10.00
 Quantidade: 100

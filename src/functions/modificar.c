@@ -93,10 +93,12 @@ void tela_modificar(void) {
     // ---- Novo preço ----
     printf("Novo Preço: R$ ");
     scanf("%f", &novos_dados.preco);
+    limpar_buffer();  // Limpa o newline deixado pelo scanf
 
     // ---- Nova quantidade ----
     printf("Nova Quantidade: ");
     scanf("%d", &novos_dados.quantidade);
+    limpar_buffer();  // Limpa o newline deixado pelo scanf
 
     // Tenta modificar o produto no arquivo
     int resultado = modificar_produto_no_arquivo(nome_busca, novos_dados);
