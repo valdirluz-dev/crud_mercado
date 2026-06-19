@@ -81,10 +81,10 @@ void tela_adicionar_estoque(void) {
         return;
     }
 
-    // Pega o produto escolhido
-    Produto *p = &produtos[escolha - 1];
-    printf("\nProduto: %s\n", p->nome);
-    printf("Quantidade atual: %d\n", p->quantidade);
+    // Pega o índice do produto escolhido
+    int indice = escolha - 1;
+    printf("\nProduto: %s\n", produtos[indice].nome);
+    printf("Quantidade atual: %d\n", produtos[indice].quantidade);
 
     // ---- PASSO 4: Pedir quantas unidades adicionar ----
     int adicionar;
@@ -99,7 +99,7 @@ void tela_adicionar_estoque(void) {
     }
 
     // ---- PASSO 5: Atualizar a quantidade ----
-    p->quantidade += adicionar;
+    produtos[indice].quantidade += adicionar;
 
     // ---- PASSO 6: Salvar todos os produtos atualizados no arquivo ----
     arquivo = fopen(PRODUTOS_PATH, "w");
@@ -119,5 +119,5 @@ void tela_adicionar_estoque(void) {
     fclose(arquivo);
 
     // Mostra mensagem de sucesso
-    printf("\n[SUCESSO] Nova quantidade de '%s': %d\n", p->nome, p->quantidade);
+    printf("\n[SUCESSO] Nova quantidade de '%s': %d\n", produtos[indice].nome, produtos[indice].quantidade);
 }

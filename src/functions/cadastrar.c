@@ -1,37 +1,6 @@
 #include "../imports.h"
 
 // ====================================================================
-// FUNÇÃO: Verificar se a categoria digitada é válida
-// ====================================================================
-// Uma categoria é válida se:
-// 1. Tem pelo menos 3 caracteres
-// 2. Não é só números
-int categoria_valida(char categoria[]) {
-    // Verifica se a categoria tem menos de 3 caracteres
-    if (strlen(categoria) < 3) {
-        return 0;  // Categoria muito curta = inválida
-    }
-
-    // Vamos verificar se a categoria é só números
-    int so_numero = 1;  // Assumimos que é só número no começo
-    for (int i = 0; categoria[i] != '\0'; i++) {
-        // Se encontramos um caractere que não é dígito (0-9)
-        if (categoria[i] < '0' || categoria[i] > '9') {
-            so_numero = 0;  // Então não é só números
-            break;
-        }
-    }
-
-    // Se descobrimos que é só números, a categoria é inválida
-    if (so_numero) {
-        return 0;
-    }
-
-    // Se passou em todos os testes, a categoria é válida!
-    return 1;
-}
-
-// ====================================================================
 // FUNÇÃO: Mostrar quais categorias já foram usadas
 // ====================================================================
 void mostrar_categorias_existentes(void) {
@@ -145,15 +114,17 @@ int salvar_produto(Produto p) {
 }
 
 // ====================================================================
-// VARIÁVEIS GLOBAIS - Usadas para controlar a tela de cadastro
+// VARIÁVEIS LOCAIS - Usadas dentro da função de cadastro
 // ====================================================================
-int existe, valida, resultp, resultq;
 
 // ====================================================================
 // TELA: Cadastrar Novo Produto
 // ====================================================================
 void tela_cadastro(void) {
     Produto p;  // Variável para guardar os dados do novo produto
+    int existe;  // Flag para saber se o nome já existe
+    int resultp, resultq;  // Variáveis para saber se scanf funcionou
+    
     limpar_buffer();
 
     printf("\n==================================================\n");
@@ -165,11 +136,6 @@ void tela_cadastro(void) {
         printf("Nome do Produto: ");
         fgets(p.nome, 30, stdin);  // Lê o nome digitado pelo usuário
         p.nome[strcspn(p.nome, "\n")] = 0;  // Remove quebra de linha
-        
-        // Converte o nome para minúsculas (para padronizar)
-        for (int i = 0; p.nome[i] != '\0'; i++) {
-            p.nome[i] = tolower(p.nome[i]);
-        }
         
         // Verifica se o nome já existe
         existe = nome_existe(p.nome);
@@ -190,18 +156,12 @@ void tela_cadastro(void) {
         fgets(p.categoria, 20, stdin);  // Lê a categoria
         p.categoria[strcspn(p.categoria, "\n")] = 0;  // Remove quebra de linha
         
-        // Converte para minúsculas
-        for (int i = 0; p.categoria[i] != '\0'; i++) {
-            p.categoria[i] = tolower(p.categoria[i]);
-        }
-        
-        // Verifica se a categoria digitada é válida
-        valida = categoria_valida(p.categoria);
-        if (!valida) {
-            printf("Categoria invalida! Digite uma categoria com pelo menos 3 letras e que nao seja somente numeros.\n");
+        // Verifica se a categoria está vazia
+        if (strlen(p.categoria) < 1) {
+            printf("Categoria nao pode ser vazia!\n");
         }
     // Repete enquanto a categoria for inválida
-    } while (!valida);
+    } while (strlen(p.categoria) < 1);
     
     // ---- PASSO 3: Pedir o preço do produto ----
     do { 

@@ -86,9 +86,9 @@ void tela_remover_estoque(void) {
         return;
     }
 
-    // Pega o produto escolhido
-    Produto *p = &produtos[escolha - 1];
-    printf("\nProduto: %s\n", p->nome);
+    // Pega o índice do produto escolhido
+    int indice = escolha - 1;
+    printf("\nProduto: %s\n", produtos[indice].nome);
 
     // ---- PASSO 4: Pedir quantas unidades remover ----
     int remover;
@@ -108,13 +108,13 @@ void tela_remover_estoque(void) {
     }
 
     // Verifica se não está tentando remover mais do que existe em estoque
-    if (remover > p->quantidade) {
+    if (remover > produtos[indice].quantidade) {
         printf("\n[!] Nao e possivel remover mais do que existe. Operacao cancelada.\n");
         return;
     }
 
     // ---- PASSO 5: Atualizar a quantidade ----
-    p->quantidade -= remover;
+    produtos[indice].quantidade -= remover;
 
     // ---- PASSO 6: Salvar todos os produtos atualizados no arquivo ----
     arquivo = fopen(PRODUTOS_PATH, "w");
@@ -135,5 +135,5 @@ void tela_remover_estoque(void) {
     fclose(arquivo);
 
     // Mostra mensagem de sucesso
-    printf("\n[SUCESSO] Nova quantidade de '%s': %d\n", p->nome, p->quantidade);
+    printf("\n[SUCESSO] Nova quantidade de '%s': %d\n", produtos[indice].nome, produtos[indice].quantidade);
 }
