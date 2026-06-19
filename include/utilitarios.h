@@ -16,4 +16,8 @@ void listar_nomes_produtos();
 // Mostra quais categorias de produtos já foram criadas
 void mostrar_categorias_existentes();
 
+// Limpa a tela do console (funciona em Windows, Mac e Linux)
+// Aguarda o usuário pressionar Enter antes de limpar
+void limpar_tela(void);
+
 #endif

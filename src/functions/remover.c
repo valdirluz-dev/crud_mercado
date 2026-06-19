@@ -136,4 +136,5 @@ void tela_remover_estoque(void) {
 
     // Mostra mensagem de sucesso
     printf("\n[SUCESSO] Nova quantidade de '%s': %d\n", produtos[indice].nome, produtos[indice].quantidade);
+    limpar_tela();
 }

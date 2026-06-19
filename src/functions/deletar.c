@@ -91,6 +91,7 @@ void tela_deletar(void) {
     // Mostra mensagem de sucesso ou erro
     if (resultado == 1) {
         printf("\n[SUCESSO] Produto removido do sistema!\n");
+        limpar_tela();
     } else if (resultado == 0) {
         printf("\n[AVISO] Produto '%s' nao foi encontrado.\n", nome_busca);
     } else {

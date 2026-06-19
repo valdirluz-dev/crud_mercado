@@ -74,3 +74,21 @@ void listar_nomes_produtos (){
         printf("\nNenhum produto cadastrado ou arquivo nao encontrado.\n");
     }
 }
+
+// ====================================================================
+// LIMPAR TELA - Aguarda enter e limpa a tela (Windows, Mac, Linux)
+// ====================================================================
+void limpar_tela(void) {
+    // Aguarda o usuário pressionar Enter
+    printf("\nPressione ENTER para continuar...");
+    limpar_buffer();  // Aguarda e limpa o buffer
+    
+    // Define o comando para limpar a tela conforme o sistema operacional
+    #ifdef _WIN32
+        // Windows
+        system("cls");
+    #else
+        // Linux e Mac
+        system("clear");
+    #endif
+}

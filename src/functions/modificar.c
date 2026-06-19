@@ -104,6 +104,7 @@ void tela_modificar(void) {
     // Mostra mensagem de sucesso ou erro
     if (resultado == 1) {
         printf("\n[SUCESSO] Produto alterado com sucesso!\n");
+        limpar_tela();
     } else if (resultado == 0) {
         printf("\n[AVISO] Produto '%s' não foi encontrado.\n", nome_busca);
     } else {

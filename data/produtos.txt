@@ -1,0 +1,10 @@
+Maca:
+Categoria: Frutas
+Preço: R$ 2.50
+Quantidade: 15
+------------------------
+Banana:
+Categoria: Frutas
+Preço: R$ 1.50
+Quantidade: 20
+------------------------

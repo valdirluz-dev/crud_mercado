@@ -194,7 +194,8 @@ void tela_cadastro(void) {
     
     // Mostra mensagem de sucesso ou erro
     if (resultado == 1) {
-        printf("\n[SUCESSO] Produto saved com sucesso!\n");
+        printf("\n[SUCESSO] Produto salvo com sucesso!\n");
+        limpar_tela();
     } else if (resultado == 0) {
         printf("\n[ERRO] Dados inválidos! Preço deve ser maior que zero.\n");
     } else {
