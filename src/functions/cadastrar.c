@@ -1,44 +1,61 @@
 #include "../imports.h"
 
 // ====================================================================
-// LÓGICA DE NEGÓCIO - Salvar Produto
+// FUNÇÃO: Verificar se a categoria digitada é válida
 // ====================================================================
+// Uma categoria é válida se:
+// 1. Tem pelo menos 3 caracteres
+// 2. Não é só números
 int categoria_valida(char categoria[]) {
+    // Verifica se a categoria tem menos de 3 caracteres
     if (strlen(categoria) < 3) {
-        return 0;
+        return 0;  // Categoria muito curta = inválida
     }
 
-    int so_numero = 1;
+    // Vamos verificar se a categoria é só números
+    int so_numero = 1;  // Assumimos que é só número no começo
     for (int i = 0; categoria[i] != '\0'; i++) {
+        // Se encontramos um caractere que não é dígito (0-9)
         if (categoria[i] < '0' || categoria[i] > '9') {
-            so_numero = 0;
+            so_numero = 0;  // Então não é só números
             break;
         }
     }
 
+    // Se descobrimos que é só números, a categoria é inválida
     if (so_numero) {
         return 0;
     }
 
+    // Se passou em todos os testes, a categoria é válida!
     return 1;
 }
 
+// ====================================================================
+// FUNÇÃO: Mostrar quais categorias já foram usadas
+// ====================================================================
 void mostrar_categorias_existentes(void) {
+    // Abre o arquivo de produtos para leitura
     FILE *arquivo = fopen(PRODUTOS_PATH, "r");
+    
     if (arquivo == NULL) {
         printf("\nNenhuma categoria cadastrada ainda.\n");
         return;
     }
 
-    char linha[128];
-    char categorias[100][20];
-    int total = 0;
+    char linha[128];  // Guarda uma linha do arquivo
+    char categorias[100][20];  // Array para guardar as categorias encontradas
+    int total = 0;  // Conta quantas categorias diferentes encontramos
 
+    // Lê cada linha do arquivo
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        // Verifica se essa linha começa com "Categoria: "
         if (strncmp(linha, "Categoria: ", 11) == 0) {
             char categoria[20];
+            // Extrai o nome da categoria (o que vem depois de "Categoria: ")
             sscanf(linha + 11, "%19[^\n]", categoria);
 
+            // Verifica se essa categoria já está na nossa lista
             int ja_existe = 0;
             for (int i = 0; i < total; i++) {
                 if (strcmp(categorias[i], categoria) == 0) {
@@ -47,6 +64,7 @@ void mostrar_categorias_existentes(void) {
                 }
             }
 
+            // Se a categoria é nova, adiciona à lista
             if (!ja_existe) {
                 strcpy(categorias[total], categoria);
                 total++;
@@ -56,51 +74,66 @@ void mostrar_categorias_existentes(void) {
 
     fclose(arquivo);
 
+    // Se não encontrou nenhuma categoria:
     if (total == 0) {
         printf("\nNenhuma categoria cadastrada ainda.\n");
         return;
     }
 
+    // Mostra todas as categorias encontradas
     printf("\nCategorias cadastradas: ");
     for (int i = 0; i < total; i++) {
+        // Coloca uma vírgula entre as categorias (menos antes da primeira)
         printf("%s%s", (i > 0) ? ", " : "", categorias[i]);
     }
     printf("\n");
 }
 
+// ====================================================================
+// FUNÇÃO: Verificar se um nome de produto já existe
+// ====================================================================
 int nome_existe(char nome[]) {
-    // CORREÇÃO 1: Alterado para usar a constante correta do arquivo
+    // Abre o arquivo de produtos para leitura
     FILE *arquivo = fopen(PRODUTOS_PATH, "r");
     if (arquivo == NULL) {
-        return 0;
+        return 0;  // Se arquivo não existe, o nome não existe também
     }
 
-    char linha[100];
-    // CORREÇÃO 2: Alterada a leitura para corresponder ao formato estruturado por blocos
+    char linha[100];  // Guarda uma linha do arquivo
+    
+    // Lê cada linha do arquivo, uma por uma
     while (fgets(linha, sizeof(linha), arquivo)) {
+        // Remove o caractere de quebra de linha no final da linha
         linha[strcspn(linha, "\n")] = 0;
         
-        // Verifica se a linha termina com ':' identificando o Bloco de Nome
+        // Verifica se a linha termina com ':' (indicando que é o nome de um produto)
         if (strlen(linha) > 0 && linha[strlen(linha) - 1] == ':') {
-            linha[strlen(linha) - 1] = 0; // Remove o ':' para comparar
+            linha[strlen(linha) - 1] = 0;  // Remove o ':' para deixar só o nome
             
+            // Se o nome lido é igual ao que estamos procurando:
             if (strcmp(linha, nome) == 0) {
                 fclose(arquivo);
-                return 1; // Nome duplicado encontrado
+                return 1;  // Produto já existe!
             }
         }
     }
 
     fclose(arquivo);
-    return 0;
+    return 0;  // Produto não foi encontrado
 }
 
+// ====================================================================
+// FUNÇÃO: Salvar um novo produto no arquivo
+// ====================================================================
 int salvar_produto(Produto p) {
+    // Primeiro, verifica se os dados do produto são válidos
     if (!validar_produto(p)) return 0;
 
+    // Abre o arquivo em modo "append" (adicionar ao final)
     FILE *arquivo = fopen(PRODUTOS_PATH, "a");
     if (arquivo == NULL) return -1;
 
+    // Escreve os dados do produto no arquivo
     fprintf(arquivo, "%s:\n", p.nome);
     fprintf(arquivo, "Categoria: %s\n", p.categoria);
     fprintf(arquivo, "Preço: R$ %.2f\n", p.preco);
@@ -108,77 +141,98 @@ int salvar_produto(Produto p) {
     fprintf(arquivo, "------------------------\n");
 
     fclose(arquivo);
-    return 1;
+    return 1;  // Sucesso!
 }
 
-// Escopo de variáveis globais de controle da tela mantidos
+// ====================================================================
+// VARIÁVEIS GLOBAIS - Usadas para controlar a tela de cadastro
+// ====================================================================
 int existe, valida, resultp, resultq;
 
 // ====================================================================
-// INTERFACE - Tela de Cadastro
+// TELA: Cadastrar Novo Produto
 // ====================================================================
 void tela_cadastro(void) {
-    Produto p;
+    Produto p;  // Variável para guardar os dados do novo produto
     limpar_buffer();
 
     printf("\n==================================================\n");
     printf("              CADASTRAR NOVO PRODUTO               \n");
     printf("==================================================\n");
     
+    // ---- PASSO 1: Pedir o nome do produto ----
     do {
         printf("Nome do Produto: ");
-        fgets(p.nome, 30, stdin);
-        p.nome[strcspn(p.nome, "\n")] = 0;
+        fgets(p.nome, 30, stdin);  // Lê o nome digitado pelo usuário
+        p.nome[strcspn(p.nome, "\n")] = 0;  // Remove quebra de linha
         
+        // Converte o nome para minúsculas (para padronizar)
         for (int i = 0; p.nome[i] != '\0'; i++) {
             p.nome[i] = tolower(p.nome[i]);
         }
         
+        // Verifica se o nome já existe
         existe = nome_existe(p.nome);
         
+        // Se o nome é muito curto ou já existe, mostra erro
         if (strlen(p.nome) <= 2) {
             printf("O nome deve ter mais de 2 caracteres!\n");
         } else if (existe) {
             printf("Ja existe um produto com esse nome!\n"); 
         }
+    // Repete enquanto o nome for inválido
     } while (strlen(p.nome) <= 2 || existe);
     
+    // ---- PASSO 2: Pedir a categoria do produto ----
     do { 
-        mostrar_categorias_existentes();
+        mostrar_categorias_existentes();  // Mostra categorias já usadas
         printf("Categoria: ");
-        fgets(p.categoria, 20, stdin);
-        p.categoria[strcspn(p.categoria, "\n")] = 0;
+        fgets(p.categoria, 20, stdin);  // Lê a categoria
+        p.categoria[strcspn(p.categoria, "\n")] = 0;  // Remove quebra de linha
         
+        // Converte para minúsculas
         for (int i = 0; p.categoria[i] != '\0'; i++) {
             p.categoria[i] = tolower(p.categoria[i]);
         }
         
+        // Verifica se a categoria digitada é válida
         valida = categoria_valida(p.categoria);
         if (!valida) {
             printf("Categoria invalida! Digite uma categoria com pelo menos 3 letras e que nao seja somente numeros.\n");
         }
+    // Repete enquanto a categoria for inválida
     } while (!valida);
     
+    // ---- PASSO 3: Pedir o preço do produto ----
     do { 
         printf("Preco: R$ ");
-        resultp = scanf("%f", &p.preco);
-        limpar_buffer();
+        resultp = scanf("%f", &p.preco);  // Lê o preço
+        limpar_buffer();  // Limpa o buffer depois de ler número
+        
+        // Se o preço não foi lido ou é zero/negativo, é inválido
         if (resultp != 1 || p.preco <= 0) {
             printf("Preco invalido!\n");
         }
+    // Repete enquanto o preço for inválido
     } while (resultp != 1 || p.preco <= 0);
 
+    // ---- PASSO 4: Pedir a quantidade inicial ----
     do {
         printf("Quantidade Inicial: ");
-        resultq = scanf("%d", &p.quantidade);
-        limpar_buffer();
+        resultq = scanf("%d", &p.quantidade);  // Lê a quantidade
+        limpar_buffer();  // Limpa o buffer depois de ler número
+        
+        // Se a quantidade não foi lida ou é negativa, é inválida
         if (resultq != 1 || p.quantidade < 0) {
             printf("Quantidade invalida! Digite um numero inteiro maior ou igual a zero.\n");
         }
+    // Repete enquanto a quantidade for inválida
     } while (resultq != 1 || p.quantidade < 0);
 
+    // ---- PASSO 5: Salvar o produto ----
     int resultado = salvar_produto(p); 
     
+    // Mostra mensagem de sucesso ou erro
     if (resultado == 1) {
         printf("\n[SUCESSO] Produto saved com sucesso!\n");
     } else if (resultado == 0) {

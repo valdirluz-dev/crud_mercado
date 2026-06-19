@@ -1,5 +1,0 @@
-Arroz:
-Categoria: grãos
-Preço: R$ 10.00
-Quantidade: 80
-------------------------

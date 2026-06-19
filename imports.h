@@ -1,36 +1,39 @@
 #ifndef IMPORTS_H
 #define IMPORTS_H
 
-// Bibliotecas Padrão do C
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
+// Essas linhas trazem as ferramentas do C que precisamos para o programa funcionar
+#include <stdio.h>      // Para ler e escrever dados
+#include <stdlib.h>     // Para alocação de memória e outras funções gerais
+#include <string.h>     // Para trabalhar com textos
+#include <ctype.h>      // Para converter letras maiúsculas/minúsculas
 
-#define PRODUTOS_PATH "data/produtos.txt"
-#define TEMP_PATH "data/temp.txt"
+// Endereços dos arquivos onde guardamos os dados dos produtos
+#define PRODUTOS_PATH "data/produtos.txt"   // Arquivo que salva os produtos
+#define TEMP_PATH "data/temp.txt"           // Arquivo temporário para ajudar a modificar dados
 
 // ==========================================
-// ESTRUTURAS DE DADOS (STRUCTS)
+// ESTRUTURA PARA ARMAZENAR INFORMAÇÕES DE UM PRODUTO
 // ==========================================
+// Essa estrutura é como um "molde" para guardar dados de um produto
 typedef struct {
-    char nome[30];
-    char categoria[20];
-    float preco;
-    int quantidade;
+    char nome[30];      // O nome do produto (máximo 30 caracteres)
+    char categoria[20]; // A categoria do produto, tipo "alimentos", "bebidas" (máximo 20)
+    float preco;        // O preço do produto em reais
+    int quantidade;     // Quantas unidades temos em estoque
 } Produto;
 
 // ==========================================
-// PROTÓTIPOS DAS FUNÇÕES (CONTRATOS)
+// ESSAS LINHAS TRAZEM AS FUNÇÕES QUE PRECISAMOS
+// (Cada arquivo .c implementa essas funções - aqui estamos só declarando que elas existem)
 // ==========================================
 
-// Funções de Regra e Arquivo (src/functions/*.c)
+// Funções para trabalhar com o arquivo de produtos
 #include "include/banco_arquivos.h"
 
-// Funções de Interface/Menu (src/menu.c e src/interface_menu.c)
+// Funções que mostram menus e interfaces para o usuário
 #include "include/interface_menu.h"
 
-// Funções Utilitárias (src/utilitarios.c)
+// Funções auxiliares que ajudam em tarefas comuns
 #include "include/utilitarios.h"
 
 #endif
