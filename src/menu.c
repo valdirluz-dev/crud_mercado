@@ -39,8 +39,7 @@ void executar_menu_principal(void) {
                 break;
             case 2:
                 // Usuário quer ver todos os produtos salvos
-                // Chamamos direto a função de listagem
-                listar_produtos(); 
+                tela_listar();
                 break;
             case 3:
                 // Usuário quer mudar os dados de um produto existente

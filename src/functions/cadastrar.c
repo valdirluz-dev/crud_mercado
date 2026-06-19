@@ -202,3 +202,11 @@ void tela_cadastro(void) {
         printf("\n[ERRO CRÍTICO] Não foi possível acessar o arquivo de dados.\n");
     }
 }
+
+// ====================================================================
+// TELA: Listar Todos os Produtos
+// ====================================================================
+void tela_listar(void) {
+    limpar_buffer();  // Limpa o buffer antes de listar
+    listar_produtos();  // Chama a função que lista os produtos
+}

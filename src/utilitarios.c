@@ -81,7 +81,8 @@ void listar_nomes_produtos (){
 void limpar_tela(void) {
     // Aguarda o usuário pressionar Enter
     printf("\nPressione ENTER para continuar...");
-    limpar_buffer();  // Aguarda e limpa o buffer
+    fflush(stdout);  // Força a exibição da mensagem na tela
+    limpar_buffer();  // Limpa o buffer de entrada
     
     // Define o comando para limpar a tela conforme o sistema operacional
     #ifdef _WIN32

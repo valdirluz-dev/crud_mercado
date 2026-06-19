@@ -1,10 +1,15 @@
-Maca:
-Categoria: Frutas
-Preço: R$ 2.50
-Quantidade: 15
+Feijão:
+Categoria: Grãos
+Preço: R$ 10.00
+Quantidade: 100
 ------------------------
-Banana:
+Goiaba:
 Categoria: Frutas
-Preço: R$ 1.50
-Quantidade: 20
+Preço: R$ 10.00
+Quantidade: 100
+------------------------
+Guaraná:
+Categoria: Frutas
+Preço: R$ 10.00
+Quantidade: 100
 ------------------------

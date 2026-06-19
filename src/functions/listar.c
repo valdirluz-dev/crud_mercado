@@ -41,4 +41,6 @@ void listar_produtos(void) {
     printf("=============================================================\n");
     
     fclose(arquivo);  // Fecha o arquivo
+    
+    limpar_tela();  // Aguarda enter e limpa a tela
 }
