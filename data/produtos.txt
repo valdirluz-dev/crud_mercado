@@ -1,14 +1,9 @@
-Arroz:
-Categoria: Grãos
-Preço: R$ 10.00
-Quantidade: 100
-------------------------
-Goiaba:
+Cajá:
 Categoria: Frutas
 Preço: R$ 10.00
 Quantidade: 100
 ------------------------
-Guaraná:
+Pêra:
 Categoria: Frutas
 Preço: R$ 10.00
 Quantidade: 100
