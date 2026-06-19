@@ -14,6 +14,7 @@ void listar_produtos(void) {
     }
 
     Produto p;  // Variável para guardar os dados de cada produto lido
+    int total = 0;  // Contador de produtos lidos
     
     // Mostra um título decorativo
     printf("\n==================== PRODUTOS EM ESTOQUE ====================\n");
@@ -28,6 +29,12 @@ void listar_produtos(void) {
         printf("Preço: R$ %.2f\n", p.preco);
         printf("Quantidade: %d\n", p.quantidade);
         printf("------------------------\n");
+        total++;  // Incrementa o contador
+    }
+    
+    // Se nenhum produto foi encontrado
+    if (total == 0) {
+        printf("\nNenhum produto encontrado no estoque.\n");
     }
     
     // Mostra uma linha decorativa de fechamento
