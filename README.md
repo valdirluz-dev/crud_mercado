@@ -78,33 +78,34 @@ Este projeto serve como excelente material de estudo prático para os seguintes 
 A entidade base do sistema é representada por uma estrutura composta (`struct Produto`) declarada em `imports.h`, responsável por agrupar diferentes tipos de dados primitivos em um único registro lógico:
 
 * `nome` (`char[30]`): Identificador textual e chave primária de busca nas operações do CRUD.
-* `categoria` (`char[20]`): Classificação livre de agrupamento.
-* `preco` (`float`): Ponto flutuante para valores monetários reais.
+* `categoria` (`char[20]`): Classificação de agrupamento de produtos.
+* `preco` (`float`): Ponto flutuante para valores monetários em reais.
 * `quantidade` (`int`): Tipo inteiro para o controle do estoque de unidades.
 
 ### 2. Fluxo e Menu de Navegação
 
-O arquivo `src/menu.c` implementa a interface do usuário orientada a menu por console. O menu oferece seis operações lógicas sequenciais:
+O arquivo `src/menu.c` implementa a interface do usuário orientada a menu por console. O menu oferece sete operações lógicas:
 
-1. **Cadastrar Produto:** Criação de novos registros.
-2. **Listar Produtos:** Exibição detalhada e tabulada.
+1. **Cadastrar Produto:** Criação de novos registros com validação simples.
+2. **Listar Produtos:** Exibição sequencial de todos os produtos cadastrados.
 3. **Modificar Produto:** Edição de dados de um item existente.
-4. **Deletar Produto:** Remoção controlada de mercadorias.
-5. **Adicionar Estoque:** Incremento numérico direto na quantidade atual.
-6. **Remover Estoque:** Decremento numérico direto na quantidade atual.
-7. **Sair do Sistema:** Encerramento seguro do loop.
+4. **Deletar Produto:** Remoção controlada de mercadorias com confirmação do usuário.
+5. **Adicionar Estoque:** Incremento da quantidade de um produto.
+6. **Remover Estoque:** Decremento da quantidade de um produto com validação de quantidade disponível.
+7. **Sair do Sistema:** Encerramento seguro do programa.
 
-### 3. Persistência de Dados e Gerenciamento de Arquivos (`stdio.h`)
+### 3. Persistência de Dados e Gerenciamento de Arquivos
 
-O programa não faz uso de bancos de dados relacionais e sim de manipuladores de arquivos do padrão C (`FILE *`):
+O programa utiliza arquivos de texto simples para armazenar os dados:
 
-* **Modo Append (`"a"`):** Utilizado no cadastro para adicionar novos produtos de forma sequencial ao fim do arquivo `data/produtos.txt` sem sobrescrever o conteúdo existente.
-* **Modo de Escrita Seletiva via Arquivo Temporário (`"w"`):** Para atualizar (`modificar.c`) ou remover um produto (`deletar.c`), o sistema realiza uma varredura completa. Os produtos que não sofrerão alterações são copiados para o arquivo `data/temp.txt`, enquanto o item alvo é reescrito com novas informações ou omitido (no caso de exclusão). Ao final da operação, o arquivo antigo é deletado e o temporário é renomeado para manter a integridade dos dados.
+* **Modo Append (`"a"`):** Utilizado no cadastro (`cadastrar.c`) para adicionar novos produtos ao fim do arquivo `data/produtos.txt`.
+* **Modo de Escrita Seletiva (`"w"`):** Para modificar ou remover produtos, o sistema realiza leitura completa do arquivo. Os produtos não modificados são reescritos normalmente, enquanto o produto alvo é atualizado com novos dados ou omitido (no caso de exclusão).
 
 ### 4. Validação e Robustez no Tratamento de Entradas
 
-* **Prevenção contra travamento de Loops:** A função customizada `limpar_buffer()` é executada em pontos estratégicos para higienizar o buffer de entrada (`stdin`), impedindo que caracteres inválidos (letras digitadas em campos numéricos, por exemplo) causem comportamento indefinido ou loops infinitos de leitura no `scanf`.
-* **Normalização de Strings:** Strings coletadas pelo teclado são processadas com a função `tolower()`, padronizando todas as chaves de texto em letras minúsculas para evitar falhas de busca e duplicidade de termos equivalentes (ex: diferenciar "Arroz" de "arroz").
+* **Limpeza de Buffer:** A função `limpar_buffer()` (em `utilitarios.c`) higieniza o buffer de entrada, impedindo comportamentos inesperados quando o usuário digita dados inválidos.
+* **Validação Simples:** Funções como `validar_produto()` verificam se os dados básicos estão corretos (nome com mínimo de caracteres, preço maior que zero, categoria não vazia).
+* **Verificação de Duplicidade:** A função `nome_existe()` previne cadastro de produtos com nomes duplicados.
 
 ---
 
@@ -144,10 +145,58 @@ git pull --rebase
 
 ---
 
+## � Detalhamento dos Arquivos Principais
+
+### **imports.h**
+- Centralizador de todas as bibliotecas padrão do C
+- Definição da estrutura `Produto`
+- Declaração das constantes de caminho de arquivo
+- Inclusão dos protótipos de funções dos módulos
+
+### **Main.c**
+- Ponto de entrada do programa
+- Chama a função `executar_menu_principal()`
+
+### **src/menu.c**
+- Implementação do menu principal com loop interativo
+- Roteamento das opções para as funções correspondentes
+- Uso de `switch` para direcionar o fluxo
+
+### **src/utilitarios.c**
+- `limpar_buffer()`: Remove caracteres indesejados do buffer de entrada
+- `validar_produto()`: Verifica se os dados do produto são válidos
+- `listar_nomes_produtos()`: Exibe apenas os nomes dos produtos cadastrados
+- `mostrar_categorias_existentes()`: Lista categorias usadas
+
+### **src/functions/cadastrar.c**
+- `nome_existe()`: Verifica duplicidade de nomes
+- `mostrar_categorias_existentes()`: Mostra categorias já usadas
+- `salvar_produto()`: Escreve um novo produto no arquivo
+- `tela_cadastro()`: Interface para cadastro com validações
+
+### **src/functions/listar.c**
+- `listar_produtos()`: Lê e exibe todos os produtos do arquivo
+
+### **src/functions/modificar.c**
+- `modificar_produto_no_arquivo()`: Atualiza os dados de um produto existente
+- `tela_modificar()`: Interface para modificação de dados
+
+### **src/functions/deletar.c**
+- `deletar_produto_no_arquivo()`: Remove um produto do arquivo com confirmação
+- `tela_deletar()`: Interface para deleção com pedido de confirmação
+
+### **src/functions/adicionar.c**
+- `tela_adicionar_estoque()`: Interface para aumentar quantidade de produtos
+
+### **src/functions/remover.c**
+- `tela_remover_estoque()`: Interface para diminuir quantidade de produtos com validação
+
+---
+
 ## 🚀 Observações
 
-* **Projeto desenvolvido para fins educacionais**
-
-* **Código organizado por módulos para facilitar manutenção**
-
-* **Uso de arquivos para persistência de dados**
+* **Projeto desenvolvido para fins educacionais** - Ideal para aprender conceitos básicos de C
+* **Código comentado em linguagem simples** - Cada função e bloco possui comentários explicativos
+* **Organizado por módulos** - Facilita o entendimento e manutenção do código
+* **Uso de arquivos para persistência** - Dados são salvos em texto simples
+* **Sem dependências externas** - Usa apenas bibliotecas padrão do C
